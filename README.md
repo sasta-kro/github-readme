@@ -1,4 +1,14 @@
 # GitHub Contribution Art
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="output/contribs-dark.svg"
+  />
+  <img
+    alt="Isometric GitHub contribution chart"
+    src="output/contribs-light.svg"
+  />
+</picture>
 
 This repo generates isometric SVG versions of the GitHub contribution graph for a profile README.
 
