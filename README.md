@@ -2,6 +2,9 @@
 
 This repo generates isometric SVG versions of the GitHub contribution graph for a profile README.
 
+> [!NOTE]
+> This is a fork of another repo. I have some annotations over the original readme instruction for my own use. 
+
 The generated assets live here:
 
 - `output/contribs-light.svg`
@@ -83,6 +86,11 @@ In `your-username/github-readme`:
 
 If you want private contributions included, use a token with enough access to read them. If the secret is missing, the workflow falls back to the built-in `GITHUB_TOKEN`, which is usually only good for public-only data.
 
+> [!NOTE]
+> Apparently, a "fine-grained" GitHub personal access token is more recommended than a "classic" token.   
+> So, I used the former, with permissions set to all repos (not public only), with NO special permissions.   
+
+
 ### 3. Enable Actions
 
 In the repo:
@@ -91,9 +99,27 @@ In the repo:
 2. Enable workflows if GitHub prompts you to
 3. Run `Update Contribution Art` once manually with `Run workflow`
 
+> [!NOTE]
+> At first, I couldn't find the `Update Contribution Art` nor `Run workflow` button.  
+> I could only see `0 workflow runs` and `New Workflow` button in the "Actions" tab of the repo.   
+> This was solved by going into **`All Workflows`** dropdown.  
+> Only then I finally saw `Update Contribution Art` and `Run workflow`.  
+
+
+
 After that, the workflow also runs every day on this schedule:
 
 - `17 6 * * *` UTC
+
+> [!NOTE]
+> This means the workflow runs every day at 06:17 UTC.
+> In Asia/Bangkok timezone, that is 1:17 PM every day.
+> ```text
+> minute hour day-of-month month day-of-week
+>  17     6    *            *     *
+> ```
+
+
 
 ### 4. Make sure your fork is public
 
