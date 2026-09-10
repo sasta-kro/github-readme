@@ -106,8 +106,25 @@ def fedora_animation_frames():
             .replace("${WHITE}", INK)
             .replace("${RESET}", RESET)
         )
-        frames.append(colored.splitlines())
+        frames.append(self_contained_ansi_lines(colored))
     return frames
+
+
+def self_contained_ansi_lines(text):
+    """Split text while preserving the ANSI foreground inherited by each line.
+
+    The Bash animation prints a whole frame at once, so its color state naturally
+    carries over newlines. Gifos renders the logo one row at a time alongside the
+    details panel, where each preceding row ends with a reset. Prefixing every row
+    with its inherited state keeps the source animation's colors intact.
+    """
+    current_color = RESET
+    lines = []
+    for line in text.splitlines():
+        lines.append(f"{current_color}{line}")
+        for token in ANSI_TOKEN_PATTERN.findall(line):
+            current_color = RESET if token == RESET else token
+    return lines
 
 
 def visible_width(line):
