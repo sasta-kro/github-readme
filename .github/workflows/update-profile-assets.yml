@@ -14,6 +14,7 @@ on:
       - "terminal-animation/config/profile.toml"
       - "terminal-animation/scripts/**"
       - "terminal-animation/requirements.txt"
+      - "requirements.txt"
       - ".github/workflows/update-profile-assets.yml"
 
 permissions:
@@ -35,7 +36,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends ffmpeg
-          python -m pip install --quiet -r terminal-animation/requirements.txt
+          python -m pip install --quiet -r requirements.txt
 
       - name: Generate terminal assets
         env:

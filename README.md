@@ -52,7 +52,7 @@ Python 3.12 or newer and ffmpeg are required.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install -r terminal-animation/requirements.txt
+.venv/bin/python -m pip install -r requirements.txt
 .venv/bin/python terminal-animation/scripts/gen_hero.py
 .venv/bin/python terminal-animation/scripts/gen_terminal.py --mock
 .venv/bin/python 3d-contributions/generate_contribs.py --mock --out output
