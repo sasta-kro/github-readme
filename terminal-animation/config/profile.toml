@@ -16,12 +16,12 @@ loop_seconds = 4.0
 
 [ticker]
 messages = [
-  "linux and open source",
-  "fedora workstation",
-  "self-hosted fedora server",
-  "rhel labs",
-  "neovim and zsh",
-  "building useful things",
+  "devops + platform engineering + backend systems",
+  "fedora linux + headless servers",
+  "go, python, docker, postgresql",
+  "building and maintaining dependable systems",
+  "building AUSE Discovery",
+  "building Corvus, a self-hosted PaaS",
 ]
 scroll_seconds = 24
 
@@ -33,6 +33,8 @@ fps = 18
 
 # gifos accepts 1 = fast, 2 = medium, 3 = slow.
 typing_speed = 1
+# Render this many visible characters in each typing frame.
+typing_chars_per_frame = 2
 hold_short_frames = 4
 final_hold_frames = 72
 rotation_frames = 36
@@ -41,17 +43,18 @@ memory_step = 16384
 login_banner = "Fedora Linux (tty1)"
 prompt_host = "fedora"
 command = "fastfetch --config sasta-kro"
-signoff = "# Placeholder terminal copy. Replace this in config/profile.toml."
-stack = "Linux, Bash, Python, Git, Containers"
+signoff = "# building dependable systems, maintaining them well, and making them better"
+stack = "Go, Python, Docker, PostgreSQL"
 
 details = [
-  { label = "OS:", value = "Fedora GNOME, Fedora Server, RHEL" },
-  { label = "Host:", value = "Personal workstation + home lab" },
-  { label = "Kernel:", value = "Linux" },
-  { label = "Role:", value = "Your role or focus goes here" },
-  { label = "Shell:", value = "zsh" },
-  { label = "Editor:", value = "nvim" },
-  { label = "Server:", value = "Fedora Server + RHEL" },
+  { label = "OS:", value = "Fedora GNOME, Fedora Server, macOS" },
+  { label = "Focus:", value = "Infrastructure and backend systems" },
+  { label = "Role:", value = "DevOps / Platform Engineer" },
+  { label = "Shell:", value = "zsh, Bash" },
+  { label = "Editor:", value = "Neovim, JetBrains IDEs" },
+  { label = "Backend:", value = "Go, Python, PostgreSQL" },
+  { label = "Infra:", value = "Docker, Homelab, AWS, Azure" },
+  { label = "Projects:", value = "AUSE Discovery, Corvus, and more" },
 ]
 
 # Gold is the default. To try dark blue, swap accent and accent_soft with

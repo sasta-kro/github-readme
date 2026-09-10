@@ -6,7 +6,7 @@ copy, colours, and animation timing live in config/profile.toml.
 
     python3 terminal-animation/scripts/gen_hero.py
 
-Writes generated SVGs into terminal-animation/assets/.
+Writes profile-facing SVGs into the repository-level output/ directory.
 """
 
 import math
@@ -18,7 +18,9 @@ from xml.sax.saxutils import escape
 from pyfiglet import Figlet
 
 MODULE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(MODULE_ROOT)
 ASSETS = os.path.join(MODULE_ROOT, "assets")
+OUTPUT = os.path.join(PROJECT_ROOT, "output")
 PROFILE_CONFIG = os.path.join(MODULE_ROOT, "config", "profile.toml")
 
 GLYPH_WEIGHTS = {":": 0.3, ";": 0.3, "+": 0.4, "x": 0.5, "X": 0.6, "$": 0.8, "&": 1.0}
@@ -489,7 +491,8 @@ def build_ticker(messages, title, duration, theme):
 
 
 def write(name, content):
-    path = os.path.join(ASSETS, name)
+    os.makedirs(OUTPUT, exist_ok=True)
+    path = os.path.join(OUTPUT, name)
     with open(path, "w", encoding="utf-8") as handle:
         handle.write(content)
     print("%-22s %7d bytes" % (name, len(content.encode("utf-8"))))

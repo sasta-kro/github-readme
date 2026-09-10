@@ -25,6 +25,7 @@ PROJECT_ROOT = MODULE_ROOT.parent
 PROFILE_CONFIG = MODULE_ROOT / "config" / "profile.toml"
 FEDORA_LOGO_SOURCE = MODULE_ROOT / "assets" / "fedora.txt"
 ANSI_PATTERN = re.compile(r"\x1b\[[0-9;]*m")
+ANSI_TOKEN_PATTERN = re.compile(r"(\x1b\[[0-9;]*m)")
 
 ACCENT = "\x1b[93m"
 ACCENT_DEEP = "\x1b[33m"
@@ -97,6 +98,30 @@ def visible_width(line):
     return len(ANSI_PATTERN.sub("", line))
 
 
+def type_text(terminal, text, row, *, contin, speed, chars_per_frame):
+    """Type text with configurable visible-character batching."""
+    if chars_per_frame <= 1:
+        terminal.gen_typing_text(text, row, contin=contin, speed=speed)
+        return
+
+    frame_count = speed if speed in (1, 2, 3) else 1
+    continue_line = contin
+    for token in filter(None, ANSI_TOKEN_PATTERN.split(text)):
+        if ANSI_PATTERN.fullmatch(token):
+            terminal.gen_text(token, row, count=0, contin=continue_line)
+            continue_line = True
+            continue
+
+        for start in range(0, len(token), chars_per_frame):
+            terminal.gen_text(
+                token[start : start + chars_per_frame],
+                row,
+                count=frame_count,
+                contin=continue_line,
+            )
+            continue_line = True
+
+
 def post_screen(terminal, config, year):
     terminal_config = config["terminal"]
     profile = config["profile"]
@@ -128,11 +153,19 @@ def boot_screen(terminal, config, gifos):
     terminal_config = config["terminal"]
     header = "Initiating Boot Sequence ....."
     speed = terminal_config["typing_speed"]
+    chars_per_frame = terminal_config["typing_chars_per_frame"]
     hold = terminal_config["hold_short_frames"]
 
     terminal.clear_frame()
     terminal.gen_text("Initiating Boot Sequence ", 1, contin=True)
-    terminal.gen_typing_text(".....", 1, contin=True, speed=speed)
+    type_text(
+        terminal,
+        ".....",
+        1,
+        contin=True,
+        speed=speed,
+        chars_per_frame=chars_per_frame,
+    )
 
     indent = " " * ((terminal.num_cols - gen_hero.COLUMNS) // 2)
     terminal.toggle_show_cursor(False)
@@ -160,6 +193,7 @@ def login_screen(terminal, config, stamp, prompt):
     username = config["profile"]["username"]
     hold = terminal_config["hold_short_frames"]
     speed = terminal_config["typing_speed"]
+    chars_per_frame = terminal_config["typing_chars_per_frame"]
 
     terminal.clear_frame()
     terminal.set_prompt(prompt)
@@ -170,12 +204,26 @@ def login_screen(terminal, config, stamp, prompt):
     )
     terminal.gen_text("login: ", 3, count=hold)
     terminal.toggle_show_cursor(True)
-    terminal.gen_typing_text(username, 3, contin=True, speed=speed)
+    type_text(
+        terminal,
+        username,
+        3,
+        contin=True,
+        speed=speed,
+        chars_per_frame=chars_per_frame,
+    )
     terminal.gen_text("", 4, count=hold)
     terminal.toggle_show_cursor(False)
     terminal.gen_text("password: ", 4, count=hold)
     terminal.toggle_show_cursor(True)
-    terminal.gen_typing_text("************", 4, contin=True, speed=speed)
+    type_text(
+        terminal,
+        "************",
+        4,
+        contin=True,
+        speed=speed,
+        chars_per_frame=chars_per_frame,
+    )
     terminal.toggle_show_cursor(False)
     terminal.gen_text(f"Last login: {stamp} on tty1", 6, count=hold)
 
@@ -186,6 +234,7 @@ def fetch_panel(terminal, config, stats, year, prompt):
     logo = fedora_logo()
     hold = terminal_config["hold_short_frames"]
     speed = terminal_config["typing_speed"]
+    chars_per_frame = terminal_config["typing_chars_per_frame"]
     details_column = 43
 
     def field(label, value):
@@ -222,12 +271,33 @@ def fetch_panel(terminal, config, stats, year, prompt):
 
     command = terminal_config["command"]
     if command.startswith("fastfetch"):
-        terminal.gen_typing_text("\x1b[91mfastfetc", 1, contin=True, speed=speed)
+        type_text(
+            terminal,
+            "\x1b[91mfastfetc",
+            1,
+            contin=True,
+            speed=speed,
+            chars_per_frame=chars_per_frame,
+        )
         terminal.delete_row(1, prompt_col)
         terminal.gen_text(f"{ACCENT_DEEP}fastfetch{RESET}", 1, contin=True)
-        terminal.gen_typing_text(command[len("fastfetch"):], 1, contin=True, speed=speed)
+        type_text(
+            terminal,
+            command[len("fastfetch") :],
+            1,
+            contin=True,
+            speed=speed,
+            chars_per_frame=chars_per_frame,
+        )
     else:
-        terminal.gen_typing_text(command, 1, contin=True, speed=speed)
+        type_text(
+            terminal,
+            command,
+            1,
+            contin=True,
+            speed=speed,
+            chars_per_frame=chars_per_frame,
+        )
 
     terminal.toggle_show_cursor(False)
     for offset in range(max(len(logo), len(details))):
@@ -239,11 +309,13 @@ def fetch_panel(terminal, config, stats, year, prompt):
     terminal.gen_text("", 3 + max(len(logo), len(details)), count=hold)
     terminal.toggle_show_cursor(True)
     terminal.gen_prompt(terminal.curr_row + 2)
-    terminal.gen_typing_text(
+    type_text(
+        terminal,
         f"{MUTED}{terminal_config['signoff']}{RESET}",
         terminal.curr_row,
         contin=True,
         speed=speed,
+        chars_per_frame=chars_per_frame,
     )
     terminal.gen_text(
         "", terminal.curr_row, count=terminal_config["final_hold_frames"], contin=True

@@ -1,8 +1,8 @@
 # Terminal Animation Module
 
 This module owns the animated wordmark, ticker, rotating ASCII crest, Fedora
-terminal sequence, theme, and profile copy. It publishes the generated terminal
-GIF to the repository-level `output/terminal.gif` path.
+terminal sequence, theme, and profile copy. It publishes all profile-facing
+artwork through the repository-level `output/` directory.
 
 ## Configuration
 
@@ -14,9 +14,9 @@ Edit [`config/profile.toml`](config/profile.toml) to change:
 - gold or dark-blue color palettes
 - terminal dimensions, frame rate, holds, and rotation duration
 
-`typing_speed` uses the renderer's built-in values where `1` is its fastest
-setting. Faster typing will require batching multiple characters into a rendered
-frame rather than lowering that value.
+`typing_speed` controls how many frames each typing step remains visible.
+`typing_chars_per_frame` controls how many characters appear in each step, so
+values greater than `1` provide faster typing than the renderer's built-in limit.
 
 ## Fedora Animation Source
 
@@ -40,8 +40,8 @@ python3 -m venv .venv
 .venv/bin/python terminal-animation/scripts/gen_terminal.py --mock
 ```
 
-The terminal generator writes intermediate PNG frames beneath
-`terminal-animation/.build/` and the finished GIF to `output/terminal.gif`.
+The generators write intermediate PNG frames beneath `terminal-animation/.build/`
+and publish the wordmark, ticker, crest, and terminal GIF beneath `output/`.
 
 Without `--mock`, `GITHUB_TOKEN` is required for live GitHub statistics.
 
