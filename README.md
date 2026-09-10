@@ -33,7 +33,7 @@ containers, networking, and the systems that software runs on.
 I work mainly with Go, Python, Docker, PostgreSQL, and Fedora Linux. I am
 currently a DevOps intern and a computer science student at AU.
 
-### Selected work
+### Some of my Work
 
 - [AUSE Discovery](https://github.com/sasta-kro/ause-discover)
   A searchable archive of AU senior projects built with Go, PostgreSQL,
