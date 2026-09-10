@@ -9,6 +9,7 @@ artwork through the repository-level `output/` directory.
 Edit [`config/profile.toml`](config/profile.toml) to change:
 
 - GitHub username and display name
+- technology shield labels, logos, colors, and order
 - ticker messages
 - login banner, prompt, command, system details, stack, and sign-off text
 - gold or dark-blue color palettes
@@ -33,6 +34,7 @@ Run from the repository root:
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python terminal-animation/scripts/update_readme_badges.py
 .venv/bin/python terminal-animation/scripts/gen_hero.py
 .venv/bin/python terminal-animation/scripts/gen_terminal.py --mock
 ```

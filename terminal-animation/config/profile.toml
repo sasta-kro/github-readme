@@ -4,6 +4,21 @@ display_name = "SASTA-KRO"
 timezone_name = "ICT"
 timezone_offset_hours = 7
 
+[shields]
+style = "flat-square"
+background = "05070B"
+logo_color = "D4AF37"
+items = [
+  { label = "Go", logo = "go" },
+  { label = "Python", logo = "python" },
+  { label = "TypeScript", logo = "typescript" },
+  { label = "React", logo = "react" },
+  { label = "Docker", logo = "docker" },
+  { label = "PostgreSQL", logo = "postgresql" },
+  { label = "Fedora", logo = "fedora" },
+  { label = "Bash", logo = "gnubash" },
+]
+
 [wordmark]
 font = "ansi_shadow"
 type_seconds = 3.2
@@ -52,7 +67,7 @@ details = [
   { label = "Role:", value = "DevOps / Platform Engineer" },
   { label = "Shell:", value = "zsh, Bash" },
   { label = "Editor:", value = "Neovim, JetBrains IDEs" },
-  { label = "Backend:", value = "Go, Python, PostgreSQL" },
+  { label = "Backend:", value = "Go, Python, Node, PostgreSQL" },
   { label = "Infra:", value = "Docker, Homelab, AWS, Azure" },
   { label = "Projects:", value = "AUSE Discovery, Corvus, and more" },
 ]

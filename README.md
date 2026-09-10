@@ -5,16 +5,18 @@
   <img alt="SASTA-KRO" src="output/wordmark-light.svg" width="740">
 </picture>
 
+<!-- profile-shields:start -->
 <p>
-  <img alt="Fedora GNOME" src="https://img.shields.io/badge/Fedora_GNOME-05070B?style=flat-square&logo=fedora&logoColor=D4AF37">
-  <img alt="Fedora Server" src="https://img.shields.io/badge/Fedora_Server-05070B?style=flat-square&logo=fedora&logoColor=D4AF37">
-  <img alt="RHEL" src="https://img.shields.io/badge/RHEL-05070B?style=flat-square&logo=redhat&logoColor=D4AF37">
-  <img alt="macOS" src="https://img.shields.io/badge/macOS-05070B?style=flat-square&logo=apple&logoColor=D4AF37">
-  <img alt="Neovim" src="https://img.shields.io/badge/Neovim-05070B?style=flat-square&logo=neovim&logoColor=D4AF37">
-  <img alt="JetBrains" src="https://img.shields.io/badge/JetBrains_IDEs-05070B?style=flat-square&logo=jetbrains&logoColor=D4AF37">
-  <img alt="Zsh" src="https://img.shields.io/badge/Zsh-05070B?style=flat-square&logo=zsh&logoColor=D4AF37">
-  <img alt="Bash" src="https://img.shields.io/badge/Bash-05070B?style=flat-square&logo=gnubash&logoColor=D4AF37">
+  <img alt="Go" src="https://img.shields.io/badge/Go-05070B?style=flat-square&amp;logo=go&amp;logoColor=D4AF37">
+  <img alt="Python" src="https://img.shields.io/badge/Python-05070B?style=flat-square&amp;logo=python&amp;logoColor=D4AF37">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-05070B?style=flat-square&amp;logo=typescript&amp;logoColor=D4AF37">
+  <img alt="React" src="https://img.shields.io/badge/React-05070B?style=flat-square&amp;logo=react&amp;logoColor=D4AF37">
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-05070B?style=flat-square&amp;logo=docker&amp;logoColor=D4AF37">
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-05070B?style=flat-square&amp;logo=postgresql&amp;logoColor=D4AF37">
+  <img alt="Fedora" src="https://img.shields.io/badge/Fedora-05070B?style=flat-square&amp;logo=fedora&amp;logoColor=D4AF37">
+  <img alt="Bash" src="https://img.shields.io/badge/Bash-05070B?style=flat-square&amp;logo=gnubash&amp;logoColor=D4AF37">
 </p>
+<!-- profile-shields:end -->
 
 </div>
 
@@ -81,6 +83,7 @@ Python 3.12 or newer and ffmpeg are required.
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python terminal-animation/scripts/update_readme_badges.py
 .venv/bin/python terminal-animation/scripts/gen_hero.py
 .venv/bin/python terminal-animation/scripts/gen_terminal.py --mock
 .venv/bin/python 3d-contributions/generate_contribs.py --mock --out output
