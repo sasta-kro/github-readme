@@ -19,6 +19,10 @@ Edit [`config/profile.toml`](config/profile.toml) to change:
 `typing_chars_per_frame` controls how many characters appear in each step, so
 values greater than `1` provide faster typing than the renderer's built-in limit.
 
+For the animated wordmark, `type_seconds` controls the reveal duration and
+`hold_seconds` controls how long the completed name stays visible before the
+loop restarts. `cursor_blink_seconds` controls only the cursor blink.
+
 ## Fedora Animation Source
 
 [`assets/fedora-logo-ascii-animation.sh`](assets/fedora-logo-ascii-animation.sh)

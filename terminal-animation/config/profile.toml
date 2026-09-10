@@ -21,8 +21,8 @@ items = [
 
 [wordmark]
 font = "ansi_shadow"
-type_seconds = 6.0
-revealed_percent = 65.0
+type_seconds = 3.9
+hold_seconds = 5.0
 cursor_blink_seconds = 0.75
 
 [spinner]

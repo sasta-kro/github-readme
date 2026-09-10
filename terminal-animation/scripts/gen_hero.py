@@ -324,13 +324,20 @@ def wordmark_rects(lines):
     return rects
 
 
-def wordmark_style(columns, width, type_seconds, revealed_percent, cursor_blink_seconds):
+def wordmark_style(columns, width, type_seconds, hold_seconds, cursor_blink_seconds):
     """Type the wordmark out one character cell at a time.
 
     Both animations start from their resting state in @keyframes rather than in
     the rule, so a renderer that ignores CSS animation still shows the finished
     wordmark with no cursor instead of an empty box.
     """
+    if type_seconds <= 0:
+        raise ValueError("wordmark.type_seconds must be greater than zero")
+    if hold_seconds < 0:
+        raise ValueError("wordmark.hold_seconds cannot be negative")
+
+    loop_seconds = type_seconds + hold_seconds
+    revealed_percent = type_seconds / loop_seconds * 100.0
     return (
         "<style>"
         ".w{animation:type %(seconds)gs steps(%(columns)d) infinite}"
@@ -342,7 +349,7 @@ def wordmark_style(columns, width, type_seconds, revealed_percent, cursor_blink_
         "@media(prefers-reduced-motion:reduce){.w{animation:none}.c{display:none}}"
         "</style>"
         % {
-            "seconds": type_seconds,
+            "seconds": loop_seconds,
             "columns": columns,
             "revealed": revealed_percent,
             "blink": cursor_blink_seconds,
@@ -518,7 +525,7 @@ def main():
     )
     wordmark_args = (
         wordmark_config["type_seconds"],
-        wordmark_config["revealed_percent"],
+        wordmark_config["hold_seconds"],
         wordmark_config["cursor_blink_seconds"],
     )
 
