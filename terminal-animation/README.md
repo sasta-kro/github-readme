@@ -21,13 +21,10 @@ values greater than `1` provide faster typing than the renderer's built-in limit
 ## Fedora Animation Source
 
 [`assets/fedora-logo-ascii-animation.sh`](assets/fedora-logo-ascii-animation.sh)
-is the proven 24-frame Fedora animation used as the reference implementation.
-It loops at 0.05 seconds per frame and stops on a keypress.
-
-The current generated fastfetch panel still reads the static
-[`assets/fedora.txt`](assets/fedora.txt). The shell animation is preserved here
-so its frames can be integrated into the Python renderer without depending on a
-separate repository.
+is the source of the 24-frame Fedora animation. The terminal renderer parses
+those frames, applies the configured terminal palette, and loops them through
+the final hold of the fastfetch panel. The default 72-frame hold shows three
+complete Fedora loops at 18 FPS.
 
 ## Generate Locally
 

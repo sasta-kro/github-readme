@@ -10,7 +10,7 @@ on:
     paths:
       - "3d-contributions/**"
       - "terminal-animation/assets/ascii-art.txt"
-      - "terminal-animation/assets/fedora.txt"
+      - "terminal-animation/assets/fedora-logo-ascii-animation.sh"
       - "terminal-animation/config/profile.toml"
       - "terminal-animation/scripts/**"
       - "terminal-animation/requirements.txt"

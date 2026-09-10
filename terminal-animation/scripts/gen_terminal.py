@@ -23,9 +23,13 @@ import gen_hero
 MODULE_ROOT = Path(__file__).resolve().parents[1]
 PROJECT_ROOT = MODULE_ROOT.parent
 PROFILE_CONFIG = MODULE_ROOT / "config" / "profile.toml"
-FEDORA_LOGO_SOURCE = MODULE_ROOT / "assets" / "fedora.txt"
+FEDORA_ANIMATION_SOURCE = MODULE_ROOT / "assets" / "fedora-logo-ascii-animation.sh"
 ANSI_PATTERN = re.compile(r"\x1b\[[0-9;]*m")
 ANSI_TOKEN_PATTERN = re.compile(r"(\x1b\[[0-9;]*m)")
+FEDORA_FRAME_PATTERN = re.compile(
+    r'"(\$\{BLUE\}.*?\$\{RESET\})"',
+    re.DOTALL,
+)
 
 ACCENT = "\x1b[93m"
 ACCENT_DEEP = "\x1b[33m"
@@ -88,10 +92,22 @@ def crest_frames(frame_count):
     ]
 
 
-def fedora_logo():
-    with FEDORA_LOGO_SOURCE.open(encoding="utf-8") as handle:
-        lines = handle.read().rstrip("\n").split("\n")
-    return [line.replace("$1", ACCENT_DEEP).replace("$2", INK) + RESET for line in lines]
+def fedora_animation_frames():
+    """Load and colorize the Fedora frames preserved in the Bash source."""
+    source = FEDORA_ANIMATION_SOURCE.read_text(encoding="utf-8")
+    raw_frames = FEDORA_FRAME_PATTERN.findall(source)
+    if not raw_frames:
+        raise ValueError(f"No Fedora frames found in {FEDORA_ANIMATION_SOURCE}")
+
+    frames = []
+    for raw_frame in raw_frames:
+        colored = (
+            raw_frame.replace("${BLUE}", ACCENT_DEEP)
+            .replace("${WHITE}", INK)
+            .replace("${RESET}", RESET)
+        )
+        frames.append(colored.splitlines())
+    return frames
 
 
 def visible_width(line):
@@ -231,7 +247,8 @@ def login_screen(terminal, config, stamp, prompt):
 def fetch_panel(terminal, config, stats, year, prompt):
     terminal_config = config["terminal"]
     profile = config["profile"]
-    logo = fedora_logo()
+    logo_frames = fedora_animation_frames()
+    logo = logo_frames[0]
     hold = terminal_config["hold_short_frames"]
     speed = terminal_config["typing_speed"]
     chars_per_frame = terminal_config["typing_chars_per_frame"]
@@ -317,9 +334,22 @@ def fetch_panel(terminal, config, stats, year, prompt):
         speed=speed,
         chars_per_frame=chars_per_frame,
     )
-    terminal.gen_text(
-        "", terminal.curr_row, count=terminal_config["final_hold_frames"], contin=True
-    )
+    signoff_row = terminal.curr_row
+    panel_rows = max(len(logo), len(details))
+    for frame_index in range(terminal_config["final_hold_frames"]):
+        animated_logo = logo_frames[frame_index % len(logo_frames)]
+        for offset in range(panel_rows):
+            art = animated_logo[offset] if offset < len(animated_logo) else ""
+            info = details[offset] if offset < len(details) else ""
+            gap = " " * max(1, details_column - 1 - visible_width(art))
+            terminal.delete_row(3 + offset)
+            terminal.gen_text(
+                f"{art}{gap}{info}",
+                3 + offset,
+                count=0,
+                contin=True,
+            )
+        terminal.gen_text("", signoff_row, count=1, contin=True)
 
 
 def main():
