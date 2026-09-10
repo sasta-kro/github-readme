@@ -2,8 +2,8 @@
 Generate isometric GitHub contribution SVGs for use in a profile README.
 
 Examples:
-    python generate_contribs.py --mock
-    python generate_contribs.py --user colincode0 --out ./output
+    python 3d-contributions/generate_contribs.py --mock --out ./tmp/contributions
+    python 3d-contributions/generate_contribs.py --user sasta-kro --out ./output
 """
 
 from __future__ import annotations

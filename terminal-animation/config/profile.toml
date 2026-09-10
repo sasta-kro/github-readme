@@ -1,0 +1,73 @@
+[profile]
+username = "sasta-kro"
+display_name = "SASTA-KRO"
+timezone_name = "ICT"
+timezone_offset_hours = 7
+
+[wordmark]
+font = "ansi_shadow"
+type_seconds = 3.2
+revealed_percent = 72.0
+cursor_blink_seconds = 0.75
+
+[spinner]
+frame_count = 48
+loop_seconds = 4.0
+
+[ticker]
+messages = [
+  "linux and open source",
+  "fedora workstation",
+  "self-hosted fedora server",
+  "rhel labs",
+  "neovim and zsh",
+  "building useful things",
+]
+scroll_seconds = 24
+
+[terminal]
+width = 1000
+height = 640
+padding = 15
+fps = 18
+
+# gifos accepts 1 = fast, 2 = medium, 3 = slow.
+typing_speed = 1
+hold_short_frames = 4
+final_hold_frames = 72
+rotation_frames = 36
+memory_step = 16384
+
+login_banner = "Fedora Linux (tty1)"
+prompt_host = "fedora"
+command = "fastfetch --config sasta-kro"
+signoff = "# Placeholder terminal copy. Replace this in config/profile.toml."
+stack = "Linux, Bash, Python, Git, Containers"
+
+details = [
+  { label = "OS:", value = "Fedora GNOME, Fedora Server, RHEL" },
+  { label = "Host:", value = "Personal workstation + home lab" },
+  { label = "Kernel:", value = "Linux" },
+  { label = "Role:", value = "Your role or focus goes here" },
+  { label = "Shell:", value = "zsh" },
+  { label = "Editor:", value = "nvim" },
+  { label = "Server:", value = "Fedora Server + RHEL" },
+]
+
+# Gold is the default. To try dark blue, swap accent and accent_soft with
+# values such as #1D4ED8 and #60A5FA.
+[theme.dark]
+background = "#05070B"
+foreground = "#F6F1E5"
+muted = "#61749B"
+accent = "#D4AF37"
+accent_soft = "#F1D77A"
+border = "#2B2515"
+
+[theme.light]
+background = "#FFFDF7"
+foreground = "#17130A"
+muted = "#5C6577"
+accent = "#8A6508"
+accent_soft = "#C59A24"
+border = "#D8C995"

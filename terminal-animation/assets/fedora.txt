@@ -1,0 +1,19 @@
+$1             .',;::::;,'.
+$1         .';:cccccccccccc:;,.
+$1      .;cccccccccccccccccccccc;.
+$1    .:cccccccccccccccccccccccccc:.
+$1  .;ccccccccccccc;        ;ccccccc;.
+$1 .:ccccccccccccc;          ;ccccccc:.
+$1.:ccccccccccccc;    ;cc;    ;ccccccc:.
+$1,cccccccccccccc;    ;cc;    ;cccccccc,
+$1:cccccccccccccc;    ;cccccccccccccccc:
+$1:ccccccc;      ;$2MMM000k.$1;cccccccccccc:
+$1cccccc;        ;$2MMMkddc.$1;cccccccccccc;
+$1ccccc;    ;cccc;    ;cccccccccccccccc'
+$1ccccc;   ;ccccc;    ;ccccccccccccccc;
+$1ccccc;     ccc     ;ccccccccccccccc;
+$1cccccc;           ;cccccccccccccc:,
+$1cccccccc;       ;cccccccccccccc:,.
+$1ccccccccccccccccccccccccccccc:'.
+$1:ccccccccccccccccccccccc:;,..
+$1 ':cccccccccccccccc::;,.

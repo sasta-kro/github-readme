@@ -1,0 +1,2 @@
+github-readme-terminal==0.0.3
+pyfiglet==1.0.4

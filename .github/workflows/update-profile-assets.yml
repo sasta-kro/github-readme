@@ -1,0 +1,64 @@
+name: Update Profile Assets
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - "3d-contributions/**"
+      - "terminal-animation/assets/ascii-art.txt"
+      - "terminal-animation/assets/fedora.txt"
+      - "terminal-animation/config/profile.toml"
+      - "terminal-animation/scripts/**"
+      - "terminal-animation/requirements.txt"
+      - ".github/workflows/update-profile-assets.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          python -m pip install --quiet -r terminal-animation/requirements.txt
+
+      - name: Generate terminal assets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python terminal-animation/scripts/gen_hero.py
+          python terminal-animation/scripts/gen_terminal.py
+
+      - name: Generate contribution SVGs
+        env:
+          GITHUB_USER: ${{ github.repository_owner }}
+          GH_README_TOKEN: ${{ secrets.GH_README_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python 3d-contributions/generate_contribs.py --out output
+
+      - name: Commit updated assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add terminal-animation/assets/hero-dark.svg terminal-animation/assets/hero-light.svg
+          git add terminal-animation/assets/wordmark-dark.svg terminal-animation/assets/wordmark-light.svg
+          git add terminal-animation/assets/ticker.svg
+          git add output/terminal.gif output/contribs-dark.svg output/contribs-light.svg
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: update profile assets"
+          git push

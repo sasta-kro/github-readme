@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Fixed-width ASCII sources intentionally contain right padding.
+terminal-animation/assets/ascii-art.txt whitespace=-trailing-space
+terminal-animation/assets/fedora-logo-ascii-animation.sh whitespace=-trailing-space
